@@ -1,0 +1,5 @@
+; this is a comment ! :D I can write whatever I want here!
+let a be Point as (54,0)
+let b be Point as (10,20)
+let c be Point
+c is 3
