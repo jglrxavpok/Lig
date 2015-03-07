@@ -2,4 +2,4 @@
 let a be Point as (54,0)
 let b be Point as (10,20)
 let c be Point
-c is 3
+c is a+b
