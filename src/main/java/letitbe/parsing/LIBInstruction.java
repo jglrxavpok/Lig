@@ -1,4 +1,4 @@
-package letitbe;
+package letitbe.parsing;
 
 public abstract class LIBInstruction {
 

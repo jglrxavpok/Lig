@@ -1,4 +1,4 @@
-package letitbe;
+package letitbe.parsing;
 
 public class LIBCreateTupleInstruction extends LIBInstruction {
     private final LIBExpression left;

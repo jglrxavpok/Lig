@@ -1,4 +1,4 @@
-package letitbe;
+package letitbe.parsing;
 
 public class LIBConstantInstruction extends LIBInstruction {
     private final Object value;

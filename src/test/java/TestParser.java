@@ -1,4 +1,4 @@
-import letitbe.*;
+import letitbe.parsing.*;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +11,7 @@ public class TestParser {
 
     @Test
     public void singleVarDeclaration() throws IOException {
-        FirstStageParser parser = new FirstStageParser(new ByteArrayInputStream("Let myvar be an integer.".getBytes()));
+        LIBParser parser = new LIBParser(new ByteArrayInputStream("Let myvar be an integer.".getBytes()));
         LIBCodeblock block = parser.parseCodeblock();
         assertEquals(1, block.getInstructions().size());
         assertTrue(block.getInstructions().get(0) instanceof LIBVariableDeclarationInstruction);
@@ -23,7 +23,7 @@ public class TestParser {
 
     @Test
     public void singleVarDeclarationWithDefaultValue() throws IOException {
-        FirstStageParser parser = new FirstStageParser(new ByteArrayInputStream("Let myvar be an integer equal to 50".getBytes()));
+        LIBParser parser = new LIBParser(new ByteArrayInputStream("Let myvar be an integer equal to 50".getBytes()));
         LIBCodeblock block = parser.parseCodeblock();
         assertEquals(1, block.getInstructions().size());
         assertTrue(block.getInstructions().get(0) instanceof LIBVariableDeclarationInstruction);
@@ -35,7 +35,7 @@ public class TestParser {
 
     @Test
     public void singleVarDeclarationWithDefaultTupleValue() throws IOException {
-        FirstStageParser parser = new FirstStageParser(new ByteArrayInputStream("Let myvar be a StrangeTuple equal to (50, (5, 9))".getBytes()));
+        LIBParser parser = new LIBParser(new ByteArrayInputStream("Let myvar be a StrangeTuple equal to (50, (5, 9))".getBytes()));
         LIBCodeblock block = parser.parseCodeblock();
         assertEquals(1, block.getInstructions().size());
         assertTrue(block.getInstructions().get(0) instanceof LIBVariableDeclarationInstruction);

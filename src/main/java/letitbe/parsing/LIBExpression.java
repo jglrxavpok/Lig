@@ -1,4 +1,4 @@
-package letitbe;
+package letitbe.parsing;
 
 import java.util.ArrayList;
 import java.util.Collections;

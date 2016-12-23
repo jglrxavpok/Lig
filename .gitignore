@@ -25,3 +25,4 @@ ourcraft_textures_blocks.png
 .idea/
 *.iml
 build/
+runtime/

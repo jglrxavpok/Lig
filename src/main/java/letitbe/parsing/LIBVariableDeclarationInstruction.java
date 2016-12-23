@@ -1,4 +1,4 @@
-package letitbe;
+package letitbe.parsing;
 
 public class LIBVariableDeclarationInstruction extends LIBInstruction {
     private LIBExpression defaultValue;

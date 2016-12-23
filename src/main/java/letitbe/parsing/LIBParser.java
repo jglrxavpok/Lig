@@ -1,4 +1,4 @@
-package letitbe;
+package letitbe.parsing;
 
 import antlr.letitbe.LetItBeLexer;
 import antlr.letitbe.LetItBeParser;
@@ -12,16 +12,15 @@ import java.util.List;
 /**
  * Reads the source code and parses it
  */
-public class FirstStageParser {
+public class LIBParser {
 
     private final LetItBeParser parser;
 
-    public FirstStageParser(InputStream sourceCodeStream) throws IOException {
+    public LIBParser(InputStream sourceCodeStream) throws IOException {
         LetItBeLexer lexer = new LetItBeLexer(new ANTLRInputStream(sourceCodeStream));
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         parser = new LetItBeParser(tokens);
     }
-
 
     public LIBCodeblock parseCodeblock() {
         LIBCodeblock codeblock = new LIBCodeblock();
