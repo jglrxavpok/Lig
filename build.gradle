@@ -1,70 +1,52 @@
-import org.apache.tools.ant.filters.FixCrLfFilter
-import org.apache.tools.ant.filters.ReplaceTokens
-
-def filteredSourceDir = file("${buildDir}/filtered")
-
+group 'org.jglrxavpok'
+version '0.1'
 
 apply plugin: 'java'
+apply plugin: 'antlr'
 
 sourceCompatibility = 1.8
-
-// Maven Artefacts Info
-group = "org.jglr.lig"
-archivesBaseName = 'LigLang'
-
-//IDE
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven {
-        name = 'sonatype-nexus'
-        url = 'https://oss.sonatype.org/content/groups/public/'
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.2'
-}
-
-task processVersion(type: Copy) {
-    from sourceSets.main.java 
-    into filteredSourceDir 
-    // Substitute property references in files
-    // Use some of the filters provided by Ant
-    filter(FixCrLfFilter)
-    filter(ReplaceTokens, tokens: ['version': version])
-    // Use a closure to filter each line
-    filter { String line ->
-        ("$line".replaceAll('"LigLang:BuildNumber"', '"'+version+'"'))
-    }
 }
 
 sourceSets {
-    filtered {
+    main {
         java {
-            srcDirs = [filteredSourceDir]
+            srcDirs = ["src/main/java", "src/main/gen"]
+        }
+        resources {
+            srcDirs = ["src/main/resources"]
+        }
+    }
+    test {
+        java {
+            srcDirs = ["src/test/java"]
+        }
+        resources {
+            srcDirs = ["src/test/resources"]
         }
     }
 }
 
-//force UTF-8 to the compileJava task
-compileJava.options.encoding = 'UTF-8'
-
-// tell the compileJava task to compile the filtered source 
-compileJava.source = sourceSets.filtered.java
-// Add dependencies processVersion to compileJava task
-compileJava.dependsOn processVersion 
-
 dependencies {
-    compile 'com.google.guava:guava:18.0'
-    // compile 'org.ow2.asm:asm-all:5.0.3'
+    antlr "org.antlr:antlr4:4.5" // use ANTLR version 4
+
+    compile "org.bytedeco:javacpp:1.2.4"
+    compile "org.bytedeco.javacpp-presets:llvm:3.8.0-1.2"
+    compile "org.bytedeco.javacpp-presets:llvm:3.8.0-1.2:linux-x86_64"
+    compile "org.bytedeco.javacpp-presets:llvm:3.8.0-1.2:windows-x86_64"
+    compile "org.bytedeco.javacpp-presets:llvm:3.8.0-1.2:macosx-x86_64"
+    compile "org.ow2.asm:asm:5.0.3"
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
-jar
-{
-    manifest {
-        attributes 'Implementation-Title': 'LigLang', 'Implementation-Version': '0.1'
-    }
+// END SNIPPET use-plugin
+
+// START SNIPPET generate-grammar-settings
+generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += ["-visitor", "-long-messages"]
 }
