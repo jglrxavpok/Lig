@@ -4,7 +4,7 @@ codeblock:
     instruction*;
 
 instruction:
-    variableDeclaration;
+    variableDeclaration | NEWLINE;
 
 variableDeclaration:
     let IDENTIFIER BE article? IDENTIFIER (linkToValue value)? PERIOD?;
@@ -89,5 +89,8 @@ LOWERCASE_LETTER:
 UPPERCASE_LETTER:
     ('A'..'Z');
 
+NEWLINE:
+    '\n';
+
 WHITESPACE:
-    [ \t\n\r]+ -> skip;
+    [ \t\r]+ -> skip;

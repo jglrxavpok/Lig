@@ -25,10 +25,13 @@ public class LIBParser {
     public LIBCodeblock parseCodeblock() {
         LIBCodeblock codeblock = new LIBCodeblock();
         List<LetItBeParser.InstructionContext> instructionContexts = parser.codeblock().instruction();
+        int lineNumber = 1;
         for (LetItBeParser.InstructionContext context : instructionContexts) {
             if(context.variableDeclaration() != null) {
                 LIBInstruction instruction = createVariableDeclarationInsn(context.variableDeclaration());
                 codeblock.appendInstruction(instruction);
+            } else if(context.NEWLINE() != null) {
+                codeblock.appendInstruction(new LIBLineNumberInstruction(lineNumber++));
             }
         }
         return codeblock;

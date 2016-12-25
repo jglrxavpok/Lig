@@ -21,7 +21,7 @@ public class LetItBeParser extends Parser {
 		BE=10, FLOAT_TERMINATOR=11, DOUBLE_COLON=12, DIGIT=13, PERIOD=14, PLUS=15, 
 		MINUS=16, MULTIPLY=17, DIVISION=18, COLON=19, LEFT_PAREN=20, RIGHT_PAREN=21, 
 		SMALL_ARROW=22, EQUAL_SIGN=23, IDENTIFIER=24, LOWERCASE_LETTER=25, UPPERCASE_LETTER=26, 
-		WHITESPACE=27;
+		NEWLINE=27, WHITESPACE=28;
 	public static final int
 		RULE_codeblock = 0, RULE_instruction = 1, RULE_variableDeclaration = 2, 
 		RULE_value = 3, RULE_tuple = 4, RULE_article = 5, RULE_letter = 6, RULE_integer = 7, 
@@ -34,13 +34,14 @@ public class LetItBeParser extends Parser {
 	private static final String[] _LITERAL_NAMES = {
 		null, "','", "'a'", "'an'", "'the'", "'Let'", "'let'", "'as'", "'set to'", 
 		"'equal to'", "'be'", "'f'", "'::'", null, "'.'", "'+'", "'-'", "'*'", 
-		"'/'", "':'", "'('", "')'", "'->'", "'='"
+		"'/'", "':'", "'('", "')'", "'->'", "'='", null, null, null, "'\n'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, "AS", "SET_TO", "EQUAL_TO", 
 		"BE", "FLOAT_TERMINATOR", "DOUBLE_COLON", "DIGIT", "PERIOD", "PLUS", "MINUS", 
 		"MULTIPLY", "DIVISION", "COLON", "LEFT_PAREN", "RIGHT_PAREN", "SMALL_ARROW", 
-		"EQUAL_SIGN", "IDENTIFIER", "LOWERCASE_LETTER", "UPPERCASE_LETTER", "WHITESPACE"
+		"EQUAL_SIGN", "IDENTIFIER", "LOWERCASE_LETTER", "UPPERCASE_LETTER", "NEWLINE", 
+		"WHITESPACE"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -127,7 +128,7 @@ public class LetItBeParser extends Parser {
 			setState(23);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__4 || _la==T__5) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << NEWLINE))) != 0)) {
 				{
 				{
 				setState(20);
@@ -155,6 +156,7 @@ public class LetItBeParser extends Parser {
 		public VariableDeclarationContext variableDeclaration() {
 			return getRuleContext(VariableDeclarationContext.class,0);
 		}
+		public TerminalNode NEWLINE() { return getToken(LetItBeParser.NEWLINE, 0); }
 		public InstructionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -178,10 +180,25 @@ public class LetItBeParser extends Parser {
 		InstructionContext _localctx = new InstructionContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_instruction);
 		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(26);
-			variableDeclaration();
+			setState(28);
+			switch (_input.LA(1)) {
+			case T__4:
+			case T__5:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(26);
+				variableDeclaration();
+				}
+				break;
+			case NEWLINE:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(27);
+				match(NEWLINE);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -240,39 +257,39 @@ public class LetItBeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(28);
-			let();
-			setState(29);
-			match(IDENTIFIER);
 			setState(30);
-			match(BE);
+			let();
+			setState(31);
+			match(IDENTIFIER);
 			setState(32);
+			match(BE);
+			setState(34);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__3))) != 0)) {
 				{
-				setState(31);
+				setState(33);
 				article();
 				}
 			}
 
-			setState(34);
+			setState(36);
 			match(IDENTIFIER);
-			setState(38);
+			setState(40);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AS) | (1L << SET_TO) | (1L << EQUAL_TO))) != 0)) {
 				{
-				setState(35);
+				setState(37);
 				linkToValue();
-				setState(36);
+				setState(38);
 				value();
 				}
 			}
 
-			setState(41);
+			setState(43);
 			_la = _input.LA(1);
 			if (_la==PERIOD) {
 				{
-				setState(40);
+				setState(42);
 				match(PERIOD);
 				}
 			}
@@ -321,26 +338,26 @@ public class LetItBeParser extends Parser {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_value);
 		try {
-			setState(46);
+			setState(48);
 			switch (_input.LA(1)) {
 			case IDENTIFIER:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(43);
+				setState(45);
 				match(IDENTIFIER);
 				}
 				break;
 			case LEFT_PAREN:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(44);
+				setState(46);
 				tuple();
 				}
 				break;
 			case DIGIT:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(45);
+				setState(47);
 				integer();
 				}
 				break;
@@ -393,15 +410,15 @@ public class LetItBeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
-			match(LEFT_PAREN);
-			setState(49);
-			value();
 			setState(50);
-			match(T__0);
+			match(LEFT_PAREN);
 			setState(51);
 			value();
 			setState(52);
+			match(T__0);
+			setState(53);
+			value();
+			setState(54);
 			match(RIGHT_PAREN);
 			}
 		}
@@ -443,7 +460,7 @@ public class LetItBeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(54);
+			setState(56);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__3))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -492,7 +509,7 @@ public class LetItBeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(56);
+			setState(58);
 			_la = _input.LA(1);
 			if ( !(_la==LOWERCASE_LETTER || _la==UPPERCASE_LETTER) ) {
 			_errHandler.recoverInline(this);
@@ -543,19 +560,19 @@ public class LetItBeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58);
+			setState(60);
 			match(DIGIT);
-			setState(62);
+			setState(64);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==DIGIT) {
 				{
 				{
-				setState(59);
+				setState(61);
 				match(DIGIT);
 				}
 				}
-				setState(64);
+				setState(66);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -602,7 +619,7 @@ public class LetItBeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(65);
+			setState(67);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << AS) | (1L << SET_TO) | (1L << EQUAL_TO))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -649,7 +666,7 @@ public class LetItBeParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(67);
+			setState(69);
 			_la = _input.LA(1);
 			if ( !(_la==T__4 || _la==T__5) ) {
 			_errHandler.recoverInline(this);
@@ -670,24 +687,25 @@ public class LetItBeParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\35H\4\2\t\2\4\3\t"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\36J\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\3"+
-		"\2\7\2\30\n\2\f\2\16\2\33\13\2\3\3\3\3\3\4\3\4\3\4\3\4\5\4#\n\4\3\4\3"+
-		"\4\3\4\3\4\5\4)\n\4\3\4\5\4,\n\4\3\5\3\5\3\5\5\5\61\n\5\3\6\3\6\3\6\3"+
-		"\6\3\6\3\6\3\7\3\7\3\b\3\b\3\t\3\t\7\t?\n\t\f\t\16\tB\13\t\3\n\3\n\3\13"+
-		"\3\13\3\13\2\2\f\2\4\6\b\n\f\16\20\22\24\2\6\3\2\4\6\3\2\33\34\3\2\t\13"+
-		"\3\2\7\bD\2\31\3\2\2\2\4\34\3\2\2\2\6\36\3\2\2\2\b\60\3\2\2\2\n\62\3\2"+
-		"\2\2\f8\3\2\2\2\16:\3\2\2\2\20<\3\2\2\2\22C\3\2\2\2\24E\3\2\2\2\26\30"+
-		"\5\4\3\2\27\26\3\2\2\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32\3\2\2\2\32\3"+
-		"\3\2\2\2\33\31\3\2\2\2\34\35\5\6\4\2\35\5\3\2\2\2\36\37\5\24\13\2\37 "+
-		"\7\32\2\2 \"\7\f\2\2!#\5\f\7\2\"!\3\2\2\2\"#\3\2\2\2#$\3\2\2\2$(\7\32"+
-		"\2\2%&\5\22\n\2&\'\5\b\5\2\')\3\2\2\2(%\3\2\2\2()\3\2\2\2)+\3\2\2\2*,"+
-		"\7\20\2\2+*\3\2\2\2+,\3\2\2\2,\7\3\2\2\2-\61\7\32\2\2.\61\5\n\6\2/\61"+
-		"\5\20\t\2\60-\3\2\2\2\60.\3\2\2\2\60/\3\2\2\2\61\t\3\2\2\2\62\63\7\26"+
-		"\2\2\63\64\5\b\5\2\64\65\7\3\2\2\65\66\5\b\5\2\66\67\7\27\2\2\67\13\3"+
-		"\2\2\289\t\2\2\29\r\3\2\2\2:;\t\3\2\2;\17\3\2\2\2<@\7\17\2\2=?\7\17\2"+
-		"\2>=\3\2\2\2?B\3\2\2\2@>\3\2\2\2@A\3\2\2\2A\21\3\2\2\2B@\3\2\2\2CD\t\4"+
-		"\2\2D\23\3\2\2\2EF\t\5\2\2F\25\3\2\2\2\b\31\"(+\60@";
+		"\2\7\2\30\n\2\f\2\16\2\33\13\2\3\3\3\3\5\3\37\n\3\3\4\3\4\3\4\3\4\5\4"+
+		"%\n\4\3\4\3\4\3\4\3\4\5\4+\n\4\3\4\5\4.\n\4\3\5\3\5\3\5\5\5\63\n\5\3\6"+
+		"\3\6\3\6\3\6\3\6\3\6\3\7\3\7\3\b\3\b\3\t\3\t\7\tA\n\t\f\t\16\tD\13\t\3"+
+		"\n\3\n\3\13\3\13\3\13\2\2\f\2\4\6\b\n\f\16\20\22\24\2\6\3\2\4\6\3\2\33"+
+		"\34\3\2\t\13\3\2\7\bG\2\31\3\2\2\2\4\36\3\2\2\2\6 \3\2\2\2\b\62\3\2\2"+
+		"\2\n\64\3\2\2\2\f:\3\2\2\2\16<\3\2\2\2\20>\3\2\2\2\22E\3\2\2\2\24G\3\2"+
+		"\2\2\26\30\5\4\3\2\27\26\3\2\2\2\30\33\3\2\2\2\31\27\3\2\2\2\31\32\3\2"+
+		"\2\2\32\3\3\2\2\2\33\31\3\2\2\2\34\37\5\6\4\2\35\37\7\35\2\2\36\34\3\2"+
+		"\2\2\36\35\3\2\2\2\37\5\3\2\2\2 !\5\24\13\2!\"\7\32\2\2\"$\7\f\2\2#%\5"+
+		"\f\7\2$#\3\2\2\2$%\3\2\2\2%&\3\2\2\2&*\7\32\2\2\'(\5\22\n\2()\5\b\5\2"+
+		")+\3\2\2\2*\'\3\2\2\2*+\3\2\2\2+-\3\2\2\2,.\7\20\2\2-,\3\2\2\2-.\3\2\2"+
+		"\2.\7\3\2\2\2/\63\7\32\2\2\60\63\5\n\6\2\61\63\5\20\t\2\62/\3\2\2\2\62"+
+		"\60\3\2\2\2\62\61\3\2\2\2\63\t\3\2\2\2\64\65\7\26\2\2\65\66\5\b\5\2\66"+
+		"\67\7\3\2\2\678\5\b\5\289\7\27\2\29\13\3\2\2\2:;\t\2\2\2;\r\3\2\2\2<="+
+		"\t\3\2\2=\17\3\2\2\2>B\7\17\2\2?A\7\17\2\2@?\3\2\2\2AD\3\2\2\2B@\3\2\2"+
+		"\2BC\3\2\2\2C\21\3\2\2\2DB\3\2\2\2EF\t\4\2\2F\23\3\2\2\2GH\t\5\2\2H\25"+
+		"\3\2\2\2\t\31\36$*-\62B";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

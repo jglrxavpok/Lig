@@ -1,7 +1,7 @@
 package letitbe.compiler;
 
 import letitbe.parsing.LIBCodeblock;
-import letitbe.typeresolving.LIBTypeResolver;
+import letitbe.types.LIBTypeResolver;
 
 public abstract class LIBCompiler<Result> {
 
